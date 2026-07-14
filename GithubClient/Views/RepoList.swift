@@ -11,21 +11,20 @@ struct RepoList: View {
     @StateObject private var viewController = RepoListViewController()
     var body: some View {
         NavigationStack{
-            ScrollView{
-                Group {
-                    if viewController.isLoading {
-                        ProgressView("Cargando Repositorios...")
-                    }else if let errorMsg = viewController.errorMsg {
-                        Text(errorMsg)
-                            .foregroundColor(.red)
-                            .padding()
-                    }else {
-                        List(viewController.repositories) {repo in
-                            RepoItem(repository: repo)
-                        }
+            Group {
+                if viewController.isLoading {
+                    ProgressView("Cargando Repositorios...")
+                }else if let errorMsg = viewController.errorMsg {
+                    Text(errorMsg)
+                        .foregroundColor(.red)
+                        .padding()
+                }else {
+                    List(viewController.repositories) {repo in
+                        RepoItem(repository: repo)
                     }
                 }
             }
+            
             .navigationTitle("Repositorios.")
         }
         .onAppear() {
