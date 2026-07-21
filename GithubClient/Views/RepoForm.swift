@@ -1,15 +1,8 @@
-//
-//  RepoForm.swift
-//  GithubClient
-//
-//  Created by Usuario invitado on 7/7/26.
-//
-
 import SwiftUI
 
 struct RepoForm: View {
-    @State private var repoName: String = ""
-    @State private var repoDescripcion: String = ""
+    @StateObject private var viewController = RepoFormViewController()
+    var onSaveSuccess: () -> Void
     
     var body: some View {
         NavigationStack {
@@ -17,7 +10,7 @@ struct RepoForm: View {
                 Spacer()
                 
                 TextField("",
-                          text: $repoName,
+                          text: $viewController.repoName,
                           prompt: Text("Nombre del repositorio")
                             .foregroundStyle(.black.opacity(0.4))
                 )
@@ -25,43 +18,53 @@ struct RepoForm: View {
                 .padding(.vertical)
                 
                 TextField("",
-                          text: $repoDescripcion,
+                          text: $viewController.repoDescription,
                           prompt: Text("Descripcion del repositorio")
-                            .foregroundStyle(.black.opacity(0.4))
+                            .foregroundStyle(.black.opacity(0.4)),
+                          axis: .vertical
                 )
                 .textFieldStyle(.roundedBorder)
                 .lineLimit(3...6)
                 .padding(.vertical)
                 
+                if let errorMsg = viewController.errorMsg {
+                    Text(errorMsg)
+                        .foregroundStyle(.red)
+                        .font(.caption)
+                        .padding(.bottom)
+                }
+                
                 Spacer()
                 
                 HStack {
                     Button(action: {
-                        print("Boton presionado")
+                        Task {
+                            await viewController.createRepository()
+                            if viewController.errorMsg == nil {
+                                viewController.clearForm() 
+                                onSaveSuccess()
+                            }
+                        }
                     }) {
-                        Label("Guardar", systemImage: "square.and.arrow.down")
-                            .padding(.all, 5)
+                        if viewController.isLoading {
+                            ProgressView()
+                                .padding(.all, 5)
+                        } else {
+                            Label("Guardar", systemImage: "square.and.arrow.down")
+                                .padding(.all, 5)
+                        }
                     }
                     .buttonStyle(.borderedProminent)
-                    
-                    Button(action: {
-                        print("Boton presionado")
-                    }) {
-                        Label("Cancelar",
-                              systemImage: "xmark.circle")
-                            .foregroundStyle(.red)
-                            .padding(.all, 5)
-                    }
-                    .buttonStyle(.bordered)
-                    .padding(.horizontal, 4)
+                    .disabled(viewController.isLoading || viewController.repoName.isEmpty)
                 }
-            } // Cierre del VStack
-            .navigationTitle("Formulario del Repopsitorio")
+            }
+            .padding()
+            .navigationTitle("Formulario del Repositorio")
             .navigationBarTitleDisplayMode(.inline)
-        } // Cierre del NavigationStack
+        }
     }
 }
 
 #Preview {
-    RepoForm()
+    RepoForm(onSaveSuccess: {})
 }

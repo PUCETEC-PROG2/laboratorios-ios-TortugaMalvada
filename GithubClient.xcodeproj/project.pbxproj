@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		ACD8A2983006D2C5003F3C19 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = ACD8A2973006D2C5003F3C19 /* Alamofire */; };
-		ACD8A29A3006D2C5003F3C19 /* AlamofireDynamic in Frameworks */ = {isa = PBXBuildFile; productRef = ACD8A2993006D2C5003F3C19 /* AlamofireDynamic */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,7 +28,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				ACD8A2983006D2C5003F3C19 /* Alamofire in Frameworks */,
-				ACD8A29A3006D2C5003F3C19 /* AlamofireDynamic in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -73,7 +71,6 @@
 			name = GithubClient;
 			packageProductDependencies = (
 				ACD8A2973006D2C5003F3C19 /* Alamofire */,
-				ACD8A2993006D2C5003F3C19 /* AlamofireDynamic */,
 			);
 			productName = GithubClient;
 			productReference = AC15474E2F16A0A300962CDB /* GithubClient.app */;
@@ -351,11 +348,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = ACD8A2963006D2C5003F3C19 /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = Alamofire;
-		};
-		ACD8A2993006D2C5003F3C19 /* AlamofireDynamic */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = ACD8A2963006D2C5003F3C19 /* XCRemoteSwiftPackageReference "Alamofire" */;
-			productName = AlamofireDynamic;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -5,7 +5,7 @@ struct RepoItem: View {
     
     var body: some View {
         HStack(alignment: .top, spacing: 16) {
-            AsyncImage(url: URL(string: repository.owner.avatarUrl)) { image in
+            AsyncImage(url: URL(string: repository.owner.avatarUrl ?? "")) { image in
                 image
                     .resizable()
                     .scaledToFill()
@@ -30,7 +30,7 @@ struct RepoItem: View {
                         .lineLimit(2)
                 }
                 
-                if let language = repository.languaje{
+                if let language = repository.language {
                     HStack {
                         Text("Lenguaje:")
                             .font(.caption)
@@ -46,20 +46,4 @@ struct RepoItem: View {
         }
         .padding()
     }
-}
-#Preview {
-    RepoItem(
-        repository: Repository(
-            id: 12345,
-            name: "GithubClient",
-            description: "Un cliente de GitHub súper rápido programado en SwiftUI.",
-            languaje: "Swift",
-            owner: UserInfo(
-                login: "apple",
-                name: "Apple",
-                avatarUrl: "https://github.com/apple.png",
-                bio: "Creator of Swift and awesome devices."
-            )
-        )
-    )
 }
